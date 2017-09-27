@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+
+  db:
+    build: ./postgres/
+    volumes:
+      - ./postgres/data:/var/lib/postgresql/data
+    env_file:
+      - environment.env
+
+  adminer:
+    image: adminer
+    ports:
+      - "8080:8080"
+    env_file:
+      - environment.env
+
+  redis:
+    build: ./redis/
+
+  nginx:
+    build: ./nginx/
+    volumes:
+      - ./django/src/static/:/var/www/static
+      - ./django/src/media/:/var/www/media
+    env_file:
+      - environment.env
+
+
+  django:
+    build: ./django/
+    command: python3 /app/manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./django/src/:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    env_file:
+      - environment.env

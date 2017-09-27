@@ -1,6 +1,7 @@
 cooking:
 	docker-compose exec django python3 manage.py migrate
 	docker-compose exec django python3 manage.py collectstatic --noinput
+	docker-compose exec django python3 manage.py cms check
 
 createsuperuser:
 	docker-compose exec django python3 manage.py createsuperuser

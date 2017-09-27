@@ -34,7 +34,7 @@ CSRF_COOKIE_DOMAIN = os.environ.get('DJANGO_DOMAIN_NAME')
 # Application definition
 
 INSTALLED_APPS = [
-    'grappelli',
+    'djangocms_admin_style',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,7 +43,26 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'defender',
+    'django.contrib.sites',
+    'cms',
+    'menus',
+    'treebeard',
+    'sekizai',
+    'filer',
+    'easy_thumbnails',
+    'mptt',
+    'djangocms_text_ckeditor',
+    'djangocms_link',
+    'djangocms_file',
+    'djangocms_picture',
+    'djangocms_video',
+    'djangocms_googlemap',
+    'djangocms_snippet',
+    'djangocms_style',
+    'djangocms_column',
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -54,6 +73,12 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'defender.middleware.FailedLoginMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'cms.middleware.user.CurrentUserMiddleware',
+    'cms.middleware.page.CurrentPageMiddleware',
+    'cms.middleware.toolbar.ToolbarMiddleware',
+    'cms.middleware.language.LanguageCookieMiddleware',
+
 ]
 
 
@@ -63,7 +88,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'),],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -71,6 +96,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'sekizai.context_processors.sekizai',
+                'cms.context_processors.cms_settings',
             ],
 
         },
@@ -126,6 +153,11 @@ CACHES = {
 
 LANGUAGE_CODE = os.environ.get('DJANGO_LANGUAGE_CODE')
 
+LANGUAGES = [
+    ('en', 'English'),
+    ('ru', 'Russian'),
+]
+
 TIME_ZONE               = os.environ.get('DJANGO_TIMEZONE')
 DATE_FORMAT             = os.environ.get('DJANGO_DATE_FORMAT')
 DATE_INPUT_FORMATS      = os.environ.get('DJANGO_DATE_INPUT_FORMAT')
@@ -143,9 +175,25 @@ USE_TZ   = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-GRAPPELLI_ADMIN_TITLE = os.environ.get('DJANGO_SITE_NAME')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+#GRAPPELLI_ADMIN_TITLE = os.environ.get('DJANGO_SITE_NAME')
 
 DEFENDER_REDIS_URL = 'redis://redis:6379/0'
+
+CMS_TEMPLATES = [
+    ('home.html', 'Home page template'),
+]
+
+THUMBNAIL_HIGH_RESOLUTION = True
+
+THUMBNAIL_PROCESSORS = (
+    'easy_thumbnails.processors.colorspace',
+    'easy_thumbnails.processors.autocrop',
+    'filer.thumbnail_processors.scale_and_crop_with_subject_location',
+    'easy_thumbnails.processors.filters'
+)
 
 if DEBUG:
     INSTALLED_APPS += [

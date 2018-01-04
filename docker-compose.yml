@@ -9,13 +9,6 @@ services:
     env_file:
       - environment.env
 
-  adminer:
-    image: adminer
-    ports:
-      - "8080:8080"
-    env_file:
-      - environment.env
-
   redis:
     build: ./redis/
 
@@ -34,7 +27,7 @@ services:
     volumes:
       - ./django/src/:/app
     ports:
-      - "8000:8000"
+      - "10000:8000"
     depends_on:
       - db
     env_file:

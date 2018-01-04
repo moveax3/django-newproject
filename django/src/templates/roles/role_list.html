@@ -1,0 +1,17 @@
+{% extends "root.html" %}
+{% block content %}
+<table id="roles" class="table table-striped table-bordered">
+  <thead>
+    <tr>
+      <td>Название</td>
+    </tr>
+  </thead>
+  <tbody>
+  {% for role in object_list %}
+    <tr>
+      <td><a href="/targets/list/?from={{role.title}}">{{role.title}}</a></td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

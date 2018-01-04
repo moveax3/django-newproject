@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css">
+    <script type="text/javascript" charset="utf8" src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+  </head>
+  <body>
+    <nav>
+      <a href="/roles/list/" title="Открыть список ролей">Роли</a> 
+      -> <a href="/targets/list/" title="Открыть список целей">Цели</a> -> 
+      <a href="/tasks/list/" title="Открыть список задач">Задачи</a>
+    </nav>
+    {% block content %}{% endblock %}
+
+  <script>
+    function getAllUrlParams(url) {
+      /* @author Yaphi Berhanu */
+      var queryString = url ? url.split('?')[1] : window.location.search.slice(1);
+      var obj = {};
+      if (queryString) {
+        queryString = queryString.split('#')[0];
+        var arr = queryString.split('&');
+        for (var i=0; i<arr.length; i++) {
+          var a = arr[i].split('=');
+          var paramNum = undefined;
+          var paramName = a[0].replace(/\[\d*\]/, function(v) {
+            paramNum = v.slice(1,-1);
+            return '';
+          });
+          var paramValue = typeof(a[1])==='undefined' ? true : a[1];
+          paramName = paramName.toLowerCase();
+          paramValue = paramValue.toLowerCase();
+          if (obj[paramName]) {
+            if (typeof obj[paramName] === 'string') {
+              obj[paramName] = [obj[paramName]];
+            }
+            if (typeof paramNum === 'undefined') {
+              obj[paramName].push(paramValue);
+            }
+            else {
+              obj[paramName][paramNum] = paramValue;
+            }
+          }
+          else {
+            obj[paramName] = paramValue;
+          }
+        }
+      }
+      return obj;
+    }
+    var table;
+    $(document).ready(function(){
+      table = $('#targets').DataTable();
+      if(getAllUrlParams().from){
+          table.search(decodeURIComponent(getAllUrlParams().from)).draw();
+      }
+      
+    });
+
+  </script>
+  </body>
+</html>

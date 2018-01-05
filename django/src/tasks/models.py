@@ -3,6 +3,7 @@ from targets.models import Target
 from model_utils.models import TimeStampedModel
 from model_utils import Choices
 from model_utils.fields import MonitorField, StatusField
+from tinymce.models import HTMLField
 
 class Task(TimeStampedModel):
     STATUS = Choices('Новая', 'В работе', 'Готово')
@@ -31,7 +32,7 @@ class Task(TimeStampedModel):
         null            = False,
         verbose_name    = "Задача"
     )
-    description = models.TextField(
+    description = HTMLField(
         blank           = False,
         null            = False,
         verbose_name    = "Описание"

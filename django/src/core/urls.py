@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^roles/', include('roles.urls')),
     url(r'^targets/', include('targets.urls')),
     url(r'^tasks/', include('tasks.urls')),
+    url(r'^tinymce/', include('tinymce.urls')),
     url(r'^$', TemplateView.as_view(template_name='index.html', content_type='text/html'), name="index"),
 ]
 

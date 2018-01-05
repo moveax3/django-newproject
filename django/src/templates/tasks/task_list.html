@@ -14,9 +14,9 @@
   {% for task in object_list %}
     <tr>
       <td>{{task.title}}</td>
-      <td>{{task.parent}}</td>
+      <td>{% if task.parent %}{{task.parent}}{%else%}-{%endif%}</td>
       <td>{{task.target}}</td>
-      <td>{{task.description}}</td>
+      <td>{{task.description|safe}}</td>
       <td>{{task.status}}</td>
 
     </tr>

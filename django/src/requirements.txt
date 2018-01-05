@@ -6,3 +6,4 @@ django-model-utils
 django-extensions
 django-defender
 django-debug-toolbar
+django-tinymce

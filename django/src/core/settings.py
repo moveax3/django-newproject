@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'roles',
     'targets',
     'tasks',
+    'tinymce',
 ]
 
 MIDDLEWARE = [

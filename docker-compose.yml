@@ -6,6 +6,7 @@ services:
     build: ./postgres/
     volumes:
       - ./postgres/data:/var/lib/postgresql/data
+      - ./fixtures:/fixtures
     env_file:
       - environment.env
 

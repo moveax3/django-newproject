@@ -37,3 +37,6 @@ migrate_db:
 
 restore_db:
 	docker-compose exec db pg_restore -U user -a -d database /fixtures/organiser.backup
+
+restart:
+	docker-compose stop && docker-compose up 

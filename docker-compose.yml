@@ -20,12 +20,14 @@ services:
       - ./django/src/media/:/var/www/media
     env_file:
       - environment.env
-
+    depends_on:
+      - django
 
   django:
     build: ./django/
-    command: python3 /app/manage.py runserver 0.0.0.0:8000
+    command: bash /dockerscripts/wait-for-it.sh db:5432 -- python3 /app/manage.py runserver 0.0.0.0:8000
     volumes:
+      - ./dockerscripts:/dockerscripts
       - ./django/src/:/app
     ports:
       - "10000:8000"
@@ -33,3 +35,5 @@ services:
       - db
     env_file:
       - environment.env
+    depends_on:
+      - db
